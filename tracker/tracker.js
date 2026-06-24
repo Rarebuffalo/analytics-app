@@ -1,5 +1,5 @@
 (function () {
-  const API_ENDPOINT = 'http://localhost:5000/api/events';
+  const API_ENDPOINT = 'http://127.0.0.1:5000/api/events';
 
   // Retrieve or generate unique Session ID using native browser crypto
   function getSessionId() {
