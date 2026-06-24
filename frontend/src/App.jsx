@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SessionsView from './components/SessionsView';
 import HeatmapView from './components/HeatmapView';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'http://127.0.0.1:5000/api';
 
 function App() {
   const [activeTab, setActiveTab] = useState('sessions');
