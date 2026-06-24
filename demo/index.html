@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CausalFunnel Analytics Sandbox</title>
+  <style>
+    :root {
+      --bg-color: #f9fafb;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #10b981;
+      --border-color: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f3f4f6;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 4rem auto 2rem;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 4rem;
+    }
+
+    /* Simulation HUD */
+    .hud {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1f2937;
+      color: #f9fafb;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+      font-size: 0.85rem;
+      z-index: 9999;
+      max-width: 320px;
+    }
+
+    .hud-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hud-stat {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+  <!-- Load the Analytics Tracking Script -->
+  <script src="http://localhost:5000/tracker/tracker.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+      Apex Analytics
+    </div>
+    <nav>
+      <a href="#features" id="nav-features">Features</a>
+      <a href="#pricing" id="nav-pricing">Pricing</a>
+      <a href="#about" id="nav-about">About</a>
+      <a href="#" class="btn btn-secondary" id="nav-signin" style="margin-left: 2rem;">Sign In</a>
+      <a href="#" class="btn btn-primary" id="nav-signup">Get Started</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 id="hero-heading">Analyze User Journeys Instantly</h1>
+    <p id="hero-subheading">Track events, build visual heatmaps, and optimize conversions with zero overhead. Experience clean engineering in action.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <button class="btn btn-primary" id="hero-btn-primary">Deploy Now</button>
+      <button class="btn btn-secondary" id="hero-btn-secondary">Request Demo</button>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="card" id="card-features">
+      <h3>Session Recording</h3>
+      <p>Analyze how users scroll, where they hesitate, and trace full chronological customer paths without violating privacy.</p>
+      <button class="btn btn-secondary" id="btn-card-record">Learn More</button>
+    </div>
+
+    <div class="card" id="card-heatmaps">
+      <h3>Visual Heatmaps</h3>
+      <p>Overlay user clicks scaled across different device viewports on an easy 800x600 grid container to identify layout hot-spots.</p>
+      <button class="btn btn-secondary" id="btn-card-heatmaps">Explore Heatmaps</button>
+    </div>
+
+    <div class="card" id="card-integrations">
+      <h3>Automated Pipelines</h3>
+      <p>Deploy with standard Docker structures, run robust Node.js backend nodes, and feed raw telemetry data cleanly into MongoDB.</p>
+      <button class="btn btn-secondary" id="btn-card-integrations">Integrate APIs</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2026 Apex Analytics Inc. All clicks on this page are tracked for local dashboard visualization.</p>
+  </div>
+
+  <div class="hud">
+    <div class="hud-title">
+      <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981; animation: pulse 1.5s infinite;"></span>
+      Tracker Active
+    </div>
+    <div class="hud-stat" id="hud-session-info">Session: Fetching...</div>
+    <div class="hud-stat" id="hud-clicks-count">Clicks Recorded: 0</div>
+    <p style="font-size:0.75rem; color:#9ca3af; margin-top:0.5rem; border-top:1px solid #374151; padding-top:0.5rem;">
+      Clicks on any buttons, links, cards, or whitespace will instantly log coordinates.
+    </p>
+  </div>
+
+  <script>
+    // Simple client-side simulation helper to show clicks on HUD
+    let clicks = 0;
+    document.addEventListener('click', () => {
+      clicks++;
+      document.getElementById('hud-clicks-count').textContent = 'Clicks Recorded: ' + clicks;
+    });
+
+    // Retrieve active session ID from LocalStorage
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const id = localStorage.getItem('causalfunnel_session_id');
+        if (id) {
+          document.getElementById('hud-session-info').textContent = 'Session: ' + id.substring(0, 8) + '...';
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>
