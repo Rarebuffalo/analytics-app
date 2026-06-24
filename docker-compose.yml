@@ -19,6 +19,8 @@ services:
       - MONGO_URI=mongodb://database:27017/analytics
     depends_on:
       - database
+    volumes:
+      - ./tracker:/tracker
     networks:
       - analytics_network
 
