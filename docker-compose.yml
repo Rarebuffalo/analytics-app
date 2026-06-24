@@ -1,0 +1,40 @@
+services:
+  database:
+    image: mongo:6.0
+    container_name: analytics_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - analytics_network
+
+  backend:
+    build: ./backend
+    container_name: analytics_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://database:27017/analytics
+    depends_on:
+      - database
+    networks:
+      - analytics_network
+
+  frontend:
+    build: ./frontend
+    container_name: analytics_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - analytics_network
+
+volumes:
+  mongo_data:
+
+networks:
+  analytics_network:
+    driver: bridge
